@@ -12,7 +12,7 @@ export const apiService = axios.create({
 // Adds a token to each request
 apiService.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('accessToken');
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -35,7 +35,7 @@ apiService.interceptors.response.use(
     if (status === 401) {
       console.error('[ApiService] Intercepted 401. Token invalid. Performing logout...');
 
-      localStorage.removeItem('authToken');
+      localStorage.removeItem('accessToken');
 
       window.location.href = '/login';
     }

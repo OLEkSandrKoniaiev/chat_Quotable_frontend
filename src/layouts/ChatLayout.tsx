@@ -1,16 +1,18 @@
 import { Outlet } from 'react-router-dom';
-import ChatSidebar from '../components/ChatSidebar.tsx';
+
+import ChatSidebarComponent from '../components/ChatSidebarComponent.tsx';
+import styles from './ChatLayout.module.css';
 
 function ChatLayout() {
   return (
-    <>
-      <h1>Chat Layout</h1>
-      <hr />
-      <ChatSidebar />
-      <main>
+    <div className={styles.layoutContainer}>
+      <aside className={styles.sidebar}>
+        <ChatSidebarComponent />
+      </aside>
+      <main className={styles.mainContent}>
         <Outlet />
       </main>
-    </>
+    </div>
   );
 }
 
