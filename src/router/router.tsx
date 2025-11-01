@@ -6,6 +6,8 @@ import RegisterPage from '../pages/RegisterPage';
 import ChatPlaceholder from '../pages/ChatPlaceholder';
 import ChatWindow from '../pages/ChatWindow';
 import ErrorPage from '../pages/ErrorPage';
+import { AuthSuccessPage } from '../pages/AuthSuccessPage';
+import { authLoader } from '../services/auth.service';
 
 export const router = createBrowserRouter([
   {
@@ -17,9 +19,14 @@ export const router = createBrowserRouter([
     element: <RegisterPage />,
   },
   {
+    path: '/auth/success',
+    element: <AuthSuccessPage />,
+  },
+  {
     path: '/',
     element: <ChatLayout />,
     errorElement: <ErrorPage />,
+    loader: authLoader,
     children: [
       {
         index: true,
