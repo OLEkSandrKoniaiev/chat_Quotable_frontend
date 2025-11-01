@@ -1,0 +1,24 @@
+.layoutContainer {
+    display: flex;
+
+    height: 100vh;
+    width: 100%;
+}
+
+.sidebar {
+    flex-basis: 500px;
+
+    flex-shrink: 0;
+
+    background-color: #f4f4f4;
+
+    overflow-y: auto;
+}
+
+.mainContent {
+    flex-grow: 1;
+
+    overflow-y: auto;
+
+    padding: 20px;
+}
