@@ -1,4 +1,4 @@
-/* 1. Backdrop (Фон) */
+/* --- 1. Basic structure of the modal --- */
 .modalBackdrop {
   position: fixed;
   top: 0;
@@ -12,7 +12,6 @@
   z-index: 1000;
 }
 
-/* 2. Content (Вікно) */
 .modalContent {
   background: white;
   border-radius: 12px;
@@ -36,7 +35,92 @@
   margin: 20px 0;
 }
 
-/* --- 3. Верхній Блок (Аватар) --- */
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.errorMessage {
+  color: #d32f2f;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+/* --- 2. Form elements --- */
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.inputGroup label {
+  font-weight: 500;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.inputGroup input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+/* --- 3. Shared buttons --- */
+.confirmButton,
+.secondaryButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.confirmButton {
+  background-color: #28a745;
+  color: white;
+}
+
+.confirmButton:hover {
+  background-color: #218838;
+}
+
+.secondaryButton {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.secondaryButton:hover {
+  background-color: #e0e0e0;
+}
+
+.confirmButton:disabled,
+.secondaryButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --- 4. Styles specific to EditProfileModal --- */
 .topBlock {
   display: flex;
   flex-direction: column;
@@ -44,8 +128,8 @@
 }
 
 .avatarPreview {
-  width: 180px;
-  height: 180px;
+  width: 120px;
+  height: 120px;
   border-radius: 8px;
   overflow: hidden;
   margin: 16px 0;
@@ -73,8 +157,7 @@
   gap: 12px;
 }
 
-.uploadButton,
-.deleteButton {
+.uploadButton, .deleteButton {
   padding: 8px 16px;
   border: none;
   border-radius: 6px;
@@ -97,53 +180,14 @@
   cursor: not-allowed;
 }
 
-/* --- 4. Нижній Блок (Інфо) --- */
-.bottomBlock {
-  display: flex;
-  flex-direction: column;
-}
-
 .textInputs {
   display: flex;
   gap: 12px;
 }
 
 .textInputs input {
-  flex-grow: 1; /* Поля розтягуються */
+  flex-grow: 1;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
-}
-
-.confirmButton {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background-color: #28a745; /* Зелений */
-  color: white;
-  font-weight: bold;
-}
-
-.confirmButton:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* --- 5. Інші елементи --- */
-.errorMessage {
-  color: #d32f2f;
-  text-align: center;
-  margin-bottom: 12px;
-}
-
-.closeButton {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  background: transparent;
-  border: none;
-  font-size: 2rem;
-  color: #aaa;
-  cursor: pointer;
 }

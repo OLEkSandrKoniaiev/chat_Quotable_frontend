@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
-import SidebarHeaderComponent from './SidebarHeaderContainer/SidebarHeaderComponent.tsx';
-import ChatList from './ChatListContainer/ChatListComponent.tsx';
-import { chatService } from '../services/chat.service.ts';
-import type { IChat } from '../interfaces/chat.interfaces.ts';
-import { useDebounce } from '../hooks/useDebounce.ts';
+
+import SidebarHeaderComponent from '../SidebarHeaderContainer/SidebarHeaderComponent.tsx';
+import ChatList from '../ChatListContainer/ChatListComponent.tsx';
+import { chatService } from '../../services/chat.service.ts';
+import type { IChat } from '../../interfaces/chat.interfaces.ts';
+import { useDebounce } from '../../hooks/useDebounce.ts';
+import { NewChatModal } from '../Modals/NewChatModal.tsx';
+import styles from './SidebarComponent.module.css';
 
 function SidebarComponent() {
   const [chats, setChats] = useState<IChat[]>([]);
@@ -11,9 +14,7 @@ function SidebarComponent() {
   const [error, setError] = useState<string | null>(null);
 
   const [searchQuery, setSearchQuery] = useState('');
-
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
-
   const [isNewChatModalOpen, setIsNewChatModalOpen] = useState(false);
 
   useEffect(() => {
@@ -21,7 +22,6 @@ function SidebarComponent() {
       try {
         setIsLoading(true);
         setError(null);
-
         const data = await chatService.getAll(debouncedSearchQuery);
         setChats(data);
       } catch (err: unknown) {
@@ -31,7 +31,6 @@ function SidebarComponent() {
         setIsLoading(false);
       }
     };
-
     fetchChats();
   }, [debouncedSearchQuery]);
 
@@ -41,35 +40,34 @@ function SidebarComponent() {
 
   const handleOpenNewChatModal = () => {
     setIsNewChatModalOpen(true);
-    console.log('Opening new chat modal...');
   };
 
-  // const handleCloseNewChatModal = () => {
-  //   setIsNewChatModalOpen(false);
-  // };
+  const handleCloseNewChatModal = () => {
+    setIsNewChatModalOpen(false);
+  };
+
+  const handleChatCreated = (newChat: IChat) => {
+    setChats((prevChats) => [newChat, ...prevChats]);
+  };
 
   return (
     <>
       <SidebarHeaderComponent onSearchChange={handleSearchChange} />
-
       <hr />
 
       {searchQuery && (
-        <div style={{ padding: '10px' }}>
-          <button onClick={handleOpenNewChatModal} style={{ width: '100%', padding: '10px' }}>
-            + new chat
+        <div className={styles.buttonContainer}>
+          <button onClick={handleOpenNewChatModal} className={styles.createChatButton}>
+            + New Chat
           </button>
         </div>
       )}
 
       <ChatList chats={chats} isLoading={isLoading} error={error} />
 
-      {/* {isNewChatModalOpen && (
-        <NewChatModal
-          onClose={handleCloseNewChatModal}
-          // onChatCreated={тут буде функція для оновлення списку чатів}
-        />
-      )} */}
+      {isNewChatModalOpen && (
+        <NewChatModal onClose={handleCloseNewChatModal} onChatCreated={handleChatCreated} />
+      )}
     </>
   );
 }
