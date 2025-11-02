@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import SidebarHeaderComponent from './SidebarHeader/SidebarHeaderComponent.tsx';
+import SidebarHeaderComponent from './SidebarHeaderContainer/SidebarHeaderComponent.tsx';
 import ChatList from './ChatListContainer/ChatListComponent.tsx';
 import { chatService } from '../services/chat.service.ts';
 import type { IChat } from '../interfaces/chat.interfaces.ts';
 import { useDebounce } from '../hooks/useDebounce.ts';
 
-function ChatSidebarComponent() {
+function SidebarComponent() {
   const [chats, setChats] = useState<IChat[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -74,4 +74,4 @@ function ChatSidebarComponent() {
   );
 }
 
-export default ChatSidebarComponent;
+export default SidebarComponent;

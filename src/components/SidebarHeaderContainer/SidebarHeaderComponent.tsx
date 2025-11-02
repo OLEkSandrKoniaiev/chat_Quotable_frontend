@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import UserProfileComponent from './UserProfileComponent.tsx';
-import SearchBarComponent from './SearchBarComponent.tsx';
+import UserProfileComponent from '../UserProfileContainer/UserProfileComponent.tsx';
+import SearchBarComponent from '../SearchBarContainer/SearchBarComponent.tsx';
 import { userService } from '../../services/user.service.ts';
 import type { IUser } from '../../interfaces/user.interfaces.ts';
 

@@ -1,3 +1,5 @@
+import type { FC } from 'react';
+
 import type { IChat } from '../../interfaces/chat.interfaces.ts';
 import ChatListItem from './ChatListItemComponent.tsx';
 import styles from './ChatListComponent.module.css';
@@ -8,7 +10,7 @@ interface ChatListProps {
   error: string | null;
 }
 
-const ChatListComponent: React.FC<ChatListProps> = ({ chats, isLoading, error }) => {
+const ChatListComponent: FC<ChatListProps> = ({ chats, isLoading, error }) => {
   if (isLoading) {
     return <div className={styles.statusMessage}>Loading chats...</div>;
   }
@@ -23,7 +25,8 @@ const ChatListComponent: React.FC<ChatListProps> = ({ chats, isLoading, error })
 
   return (
     <>
-      <h3>Chats</h3>
+      <h3 className={styles.listTitle}>Chats</h3>
+
       <ul className={styles.chatList}>
         {chats.map((chat) => (
           <ChatListItem key={chat._id} {...chat} />

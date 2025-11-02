@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import { useState, type FC, type ChangeEvent } from 'react';
+import styles from './SearchBarComponent.module.css';
 
 interface SearchBarProps {
   onSearchChange?: (query: string) => void;
 }
 
-const SearchBarComponent: React.FC<SearchBarProps> = ({ onSearchChange }) => {
+const SearchBarComponent: FC<SearchBarProps> = ({ onSearchChange }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
     setSearchQuery(query);
     if (onSearchChange) {
@@ -16,17 +17,7 @@ const SearchBarComponent: React.FC<SearchBarProps> = ({ onSearchChange }) => {
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        padding: '8px',
-        margin: '10px 0',
-        borderRadius: '20px',
-        backgroundColor: '#f0f2f5',
-        border: '1px solid #e0e0e0',
-      }}
-    >
+    <div className={styles.searchContainer}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="20"
@@ -37,7 +28,7 @@ const SearchBarComponent: React.FC<SearchBarProps> = ({ onSearchChange }) => {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        style={{ color: '#65676b', marginRight: '8px' }}
+        className={styles.searchIcon}
       >
         <circle cx="11" cy="11" r="8" />
         <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -48,15 +39,7 @@ const SearchBarComponent: React.FC<SearchBarProps> = ({ onSearchChange }) => {
         placeholder={'Search or start new chat'}
         value={searchQuery}
         onChange={handleChange}
-        style={{
-          flexGrow: 1,
-          border: 'none',
-          outline: 'none',
-          backgroundColor: 'transparent',
-          fontSize: '16px',
-          padding: '4px 0',
-          color: '#1c1e21',
-        }}
+        className={styles.searchInput}
       />
     </div>
   );
