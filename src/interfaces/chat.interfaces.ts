@@ -2,11 +2,13 @@ export interface IChat {
   _id: string;
   firstName: string;
   lastName?: string;
+  avatarUrl?: string;
   lastMessage?: string;
-  lastMessageTimestamp?: Date;
+  lastMessageTimestamp?: string;
   unreadCount: number;
-  createdAt: Date;
-  updatedAt: Date;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IChatCreateDTO {
@@ -17,4 +19,5 @@ export interface IChatCreateDTO {
 export interface IChatUpdateDTO {
   firstName?: string;
   lastName?: string;
+  avatarUrl?: string;
 }

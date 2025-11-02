@@ -3,16 +3,19 @@ export interface IMessage {
   chatId: string;
   sender: 'user' | 'bot';
   content: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IMessageCreateDTO {
-  sender: 'user' | 'bot';
   content: string;
 }
 
-export interface IPaginationParams {
+export interface IMessageUpdateDTO {
+  content: string;
+}
+
+export interface IPaginationOptions {
   page: number;
   limit: number;
 }

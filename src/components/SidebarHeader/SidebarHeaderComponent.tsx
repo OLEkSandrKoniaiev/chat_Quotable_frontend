@@ -5,9 +5,11 @@ import SearchBarComponent from './SearchBarComponent.tsx';
 import { userService } from '../../services/user.service.ts';
 import type { IUser } from '../../interfaces/user.interfaces.ts';
 
-// import EditProfileModal from '../EditProfileModal.tsx';
+interface SidebarHeaderProps {
+  onSearchChange: (query: string) => void;
+}
 
-function SidebarHeaderComponent() {
+function SidebarHeaderComponent({ onSearchChange }: SidebarHeaderProps) {
   const [user, setUser] = useState<IUser | null>(null);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -38,13 +40,6 @@ function SidebarHeaderComponent() {
     setEditModalOpen(true);
   };
 
-  const handleSearch = (query: string) => {
-    console.log('Виконано пошук:', query);
-  };
-  const handleQueryChange = (query: string) => {
-    console.log('Поточний запит:', query);
-  };
-
   if (isLoading) {
     return <div>Loading profile...</div>; // TODO: Замінити на скелетон
   }
@@ -66,7 +61,8 @@ function SidebarHeaderComponent() {
         onLogout={handleLogout}
         onEdit={handleEdit}
       />
-      <SearchBarComponent onSearchSubmit={handleSearch} onSearchChange={handleQueryChange} />
+
+      <SearchBarComponent onSearchChange={onSearchChange} />
 
       {/* {isEditModalOpen && (
         <EditProfileModal
