@@ -10,7 +10,7 @@ import type {
 class UserService {
   /**
    * New user registration.
-   * POST /api/users/register
+   * POST /users/register
    */
   async register(dto: IUserCreateDTO): Promise<IAuthResponse> {
     const { data } = await apiService.post<IAuthResponse>('/users/register', dto);
@@ -19,7 +19,7 @@ class UserService {
 
   /**
    * Login of an existing user.
-   * POST /api/users/login
+   * POST /users/login
    */
   async login(dto: IUserLoginDTO): Promise<IAuthResponse> {
     const { data } = await apiService.post<IAuthResponse>('/users/login', dto);
@@ -28,7 +28,7 @@ class UserService {
 
   /**
    * Obtaining data about the current user based on their token.
-   * GET /api/users/me
+   * GET /users/me
    */
   async getMe(): Promise<IUser> {
     const { data } = await apiService.get<IUser>('/users/me');
@@ -37,10 +37,25 @@ class UserService {
 
   /**
    * Updating user data.
-   * PUT /api/users/:userId
+   * PUT /users/:userId
    */
   async update(userId: string, dto: IUserUpdateDTO): Promise<IUser> {
     const { data } = await apiService.put<IUser>(`/users/${userId}`, dto);
+    return data;
+  }
+
+  /**
+   * [FormData] PUT /users/:userId
+   */
+  async uploadAvatar(userId: string, file: File): Promise<IUser> {
+    const formData = new FormData();
+    formData.append('avatar', file);
+
+    const { data } = await apiService.put<IUser>(`/users/${userId}`, formData, {
+      headers: {
+        'Content-Type': undefined,
+      },
+    });
     return data;
   }
 }

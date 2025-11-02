@@ -1,28 +1,71 @@
 import { apiService } from './api.service';
-import type {
-  IMessage,
-  IMessageCreateDTO,
-  IPaginatedResult,
-  IPaginationParams,
-} from '../interfaces/message.interfaces.ts';
+
+export interface IMessage {
+  _id: string;
+  chatId: string;
+  sender: 'user' | 'bot';
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IMessageCreateDTO {
+  content: string;
+}
+
+export interface IMessageUpdateDTO {
+  content: string;
+}
+
+export interface IPaginationOptions {
+  page: number;
+  limit: number;
+}
+
+export interface IPaginatedResult<T> {
+  data: T[];
+  totalDocs: number;
+  totalPages: number;
+  currentPage: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+}
 
 class MessageService {
-  async getMessagesByChat(
+  /**
+   * GET /chats/:chatId/messages?page=1&limit=30
+   */
+  async getAllByChatId(
     chatId: string,
-    params: IPaginationParams,
+    options: IPaginationOptions,
   ): Promise<IPaginatedResult<IMessage>> {
-    const response = await apiService.get(`/chats/${chatId}/messages`, { params });
-    return response.data;
+    const { data } = await apiService.get<IPaginatedResult<IMessage>>(`/chats/${chatId}/messages`, {
+      params: options,
+    });
+    return data;
   }
 
+  /**
+   * POST /chats/:chatId/messages
+   */
   async create(chatId: string, dto: IMessageCreateDTO): Promise<IMessage> {
-    const response = await apiService.post(`/chats/${chatId}/messages`, dto);
-    return response.data;
+    const { data } = await apiService.post<IMessage>(`/chats/${chatId}/messages`, dto);
+    return data;
   }
 
-  async getById(id: string): Promise<IMessage> {
-    const response = await apiService.get(`/messages/${id}`);
-    return response.data;
+  /**
+   * PUT /messages/:id
+   */
+  async update(messageId: string, dto: IMessageUpdateDTO): Promise<IMessage> {
+    const { data } = await apiService.put<IMessage>(`/messages/${messageId}`, dto);
+    return data;
+  }
+
+  /**
+   * DELETE /messages/:id
+   */
+  async delete(messageId: string): Promise<void> {
+    await apiService.delete(`/messages/${messageId}`);
   }
 }
 

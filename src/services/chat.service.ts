@@ -1,30 +1,92 @@
 import { apiService } from './api.service';
-import type { IChat, IChatCreateDTO, IChatUpdateDTO } from '../interfaces/chat.interfaces.ts';
+
+export interface IChat {
+  _id: string;
+  firstName: string;
+  lastName?: string;
+  avatarUrl?: string;
+  lastMessage?: string;
+  lastMessageTimestamp?: string;
+  unreadCount: number;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IChatCreateDTO {
+  firstName: string;
+  lastName?: string;
+}
+
+export interface IChatUpdateDTO {
+  firstName?: string;
+  lastName?: string;
+  avatarUrl?: string;
+}
 
 class ChatService {
+  /**
+   * GET /chats
+   * Retrieves all user chats or searches among them.
+   * @param query - Optional search query
+   */
   async getAll(query?: string): Promise<IChat[]> {
-    const params = query ? { q: query } : {};
-    const response = await apiService.get('/chats', { params });
-    return response.data;
+    const params = query ? { q: query } : undefined;
+    const { data } = await apiService.get<IChat[]>('/chats', { params });
+    return data;
   }
 
-  async getById(id: string): Promise<IChat> {
-    const response = await apiService.get(`/chats/${id}`);
-    return response.data;
+  /**
+   * GET /chats/:chatId
+   */
+  async getById(chatId: string): Promise<IChat> {
+    const { data } = await apiService.get<IChat>(`/chats/${chatId}`);
+    return data;
   }
 
+  /**
+   * POST /chats
+   */
   async create(dto: IChatCreateDTO): Promise<IChat> {
-    const response = await apiService.post('/chats', dto);
-    return response.data;
+    const { data } = await apiService.post<IChat>('/chats', dto);
+    return data;
   }
 
-  async update(id: string, dto: IChatUpdateDTO): Promise<IChat> {
-    const response = await apiService.put(`/chats/${id}`, dto);
-    return response.data;
+  /**
+   * PUT /chats/:chatId
+   */
+  async update(chatId: string, dto: IChatUpdateDTO): Promise<IChat> {
+    const { data } = await apiService.put<IChat>(`/chats/${chatId}`, dto);
+    return data;
   }
 
-  async delete(id: string): Promise<void> {
-    await apiService.delete(`/chats/${id}`);
+  /**
+   * [FormData] PUT /chats/:chatId
+   */
+  async uploadAvatar(chatId: string, file: File): Promise<IChat> {
+    const formData = new FormData();
+    formData.append('avatar', file);
+
+    const { data } = await apiService.put<IChat>(`/chats/${chatId}`, formData, {
+      headers: {
+        'Content-Type': undefined,
+      },
+    });
+    return data;
+  }
+
+  /**
+   * DELETE /chats/:chatId
+   */
+  async delete(chatId: string): Promise<void> {
+    await apiService.delete(`/chats/${chatId}`);
+  }
+
+  /**
+   * PATCH /chats/:chatId/read
+   */
+  async markAsRead(chatId: string): Promise<void> {
+    await apiService.patch(`/chats/${chatId}/read`);
   }
 }
 
