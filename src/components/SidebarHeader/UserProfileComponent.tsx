@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styles from './UserProfileComponent.module.css';
+import AvatarComponent from '../AvatarContainer/AvatarComponent.tsx';
 
 interface UserProfileProps {
   avatarUrl?: string;
@@ -17,19 +18,9 @@ const UserProfileComponent: React.FC<UserProfileProps> = ({
   onLogout,
   onEdit,
 }) => {
-  const getAvatarFallback = () => (
-    <div className={styles.avatarFallback}>{firstName[0].toUpperCase()}</div>
-  );
-
   return (
     <div className={styles.profileContainer}>
-      <div className={`${styles.avatarWrapper} ${styles.avatarWrapperOnline}`}>
-        {avatarUrl ? (
-          <img src={avatarUrl} alt={`${firstName} avatar`} className={styles.avatarImage} />
-        ) : (
-          getAvatarFallback()
-        )}
-      </div>
+      <AvatarComponent avatarUrl={avatarUrl} firstName={firstName} isOnline={true} />
 
       <div className={styles.userName}>
         <span>{firstName}</span>
