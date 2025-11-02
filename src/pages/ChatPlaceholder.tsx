@@ -1,8 +1,10 @@
+import styles from './Chat.module.css';
+
 function ChatPlaceholder() {
   return (
-    <>
-      <h1>Chat Placeholder Page</h1>
-    </>
+    <div className={styles.chatPlaceholderContainer}>
+      <span>Select a chat to start communicating</span>
+    </div>
   );
 }
 
