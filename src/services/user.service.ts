@@ -49,7 +49,7 @@ class UserService {
    */
   async uploadAvatar(userId: string, file: File): Promise<IUser> {
     const formData = new FormData();
-    formData.append('avatar', file);
+    formData.append('avatarUrl', file);
 
     const { data } = await apiService.put<IUser>(`/users/${userId}`, formData, {
       headers: {

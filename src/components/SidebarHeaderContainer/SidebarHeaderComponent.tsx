@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import UserProfileComponent from '../UserProfileContainer/UserProfileComponent.tsx';
 import SearchBarComponent from '../SearchBarContainer/SearchBarComponent.tsx';
 import { userService } from '../../services/user.service.ts';
 import type { IUser } from '../../interfaces/user.interfaces.ts';
+import { EditProfileModal } from '../Modals/EditProfileModal.tsx';
+import styles from './SidebarHeaderComponent.module.css';
 
 interface SidebarHeaderProps {
   onSearchChange: (query: string) => void;
@@ -36,18 +39,25 @@ function SidebarHeaderComponent({ onSearchChange }: SidebarHeaderProps) {
     navigate('/login');
   };
 
-  const handleEdit = () => {
+  const handleOpenEditModal = () => {
     setEditModalOpen(true);
   };
 
+  const handleUpdateSuccess = (updatedUser: IUser) => {
+    setUser(updatedUser);
+  };
+
   if (isLoading) {
-    return <div>Loading profile...</div>; // TODO: Замінити на скелетон
+    return <div>Loading profile...</div>;
   }
 
   if (!user) {
     return (
-      <div>
-        Error loading profile. <button onClick={handleLogout}>Log in again</button>
+      <div className={styles.errorContainerStyle}>
+        <span>Error loading profile.</span>
+        <button className={styles.logoutButton} onClick={handleLogout}>
+          Logout
+        </button>
       </div>
     );
   }
@@ -59,17 +69,17 @@ function SidebarHeaderComponent({ onSearchChange }: SidebarHeaderProps) {
         firstName={user.firstName}
         lastName={user.lastName}
         onLogout={handleLogout}
-        onEdit={handleEdit}
+        onEdit={handleOpenEditModal}
       />
-
       <SearchBarComponent onSearchChange={onSearchChange} />
 
-      {/* {isEditModalOpen && (
+      {isEditModalOpen && user && (
         <EditProfileModal
           user={user}
           onClose={() => setEditModalOpen(false)}
+          onUpdateSuccess={handleUpdateSuccess}
         />
-      )} */}
+      )}
     </div>
   );
 }

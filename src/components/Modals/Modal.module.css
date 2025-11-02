@@ -1,0 +1,149 @@
+/* 1. Backdrop (Фон) */
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* 2. Content (Вікно) */
+.modalContent {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1001;
+}
+
+.modalContent h3 {
+  text-align: center;
+  margin-top: 0;
+  color: #333;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 20px 0;
+}
+
+/* --- 3. Верхній Блок (Аватар) --- */
+.topBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatarPreview {
+  width: 180px;
+  height: 180px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 16px 0;
+  background-color: #f0f0f0;
+}
+
+.avatarPreviewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarFallback {
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  font-weight: bold;
+  color: #555;
+}
+
+.avatarActions {
+  display: flex;
+  gap: 12px;
+}
+
+.uploadButton,
+.deleteButton {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.uploadButton {
+  background-color: #e6f3ff;
+  color: #007bff;
+}
+
+.deleteButton {
+  background-color: #fdeeee;
+  color: #d32f2f;
+}
+
+.deleteButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* --- 4. Нижній Блок (Інфо) --- */
+.bottomBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+.textInputs {
+  display: flex;
+  gap: 12px;
+}
+
+.textInputs input {
+  flex-grow: 1; /* Поля розтягуються */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.confirmButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #28a745; /* Зелений */
+  color: white;
+  font-weight: bold;
+}
+
+.confirmButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* --- 5. Інші елементи --- */
+.errorMessage {
+  color: #d32f2f;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  color: #aaa;
+  cursor: pointer;
+}

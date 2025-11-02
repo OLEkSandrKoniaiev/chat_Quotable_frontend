@@ -1,0 +1,26 @@
+.errorContainerStyle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #333;
+  padding: 6px 8px;
+  gap: 8px;
+}
+
+.logoutButton {
+  background: #e2dfdf;
+  border: none;
+  border-radius: 25%;
+  width: auto;
+  height: 32px;
+  padding: 0 8px 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.logoutButton:hover {
+  background: #cfcdcd;
+}
