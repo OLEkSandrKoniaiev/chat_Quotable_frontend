@@ -85,7 +85,7 @@ function LoginPage() {
           onClick={googleLogin}
           disabled={isLoading}
         >
-          Login with Google
+          Enter with Google
         </button>
       </form>
     </div>
