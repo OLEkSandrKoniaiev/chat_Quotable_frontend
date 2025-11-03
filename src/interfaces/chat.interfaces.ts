@@ -13,7 +13,7 @@ export interface IChat {
 
 export interface IChatCreateDTO {
   firstName: string;
-  lastName?: string;
+  lastName: string;
 }
 
 export interface IChatUpdateDTO {

@@ -1,0 +1,30 @@
+.messageListContainer {
+  flex-grow: 1;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column-reverse;
+
+  padding: 16px;
+  background-color: #f0f2f5;
+}
+
+.messageWrapper {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.user {
+  justify-content: flex-end;
+}
+
+.bot {
+  justify-content: flex-start;
+}
+
+.loader {
+  text-align: center;
+  padding: 12px;
+  color: #65676b;
+  font-size: 0.9rem;
+}

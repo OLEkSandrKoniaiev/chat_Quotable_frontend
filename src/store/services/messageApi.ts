@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type {
   IMessage,
+  IMessageUpdateDTO,
   IPaginatedResult,
   IPaginationOptions,
 } from '../../interfaces/message.interfaces.ts';
@@ -20,9 +21,6 @@ export const messageApi = createApi({
   tagTypes: ['Message'],
 
   endpoints: (builder) => ({
-    /**
-     * GET /chats/:chatId/messages
-     */
     getMessagesByChatId: builder.query<
       IPaginatedResult<IMessage>,
       { chatId: string; options: IPaginationOptions }
@@ -31,11 +29,56 @@ export const messageApi = createApi({
         url: `chats/${chatId}/messages`,
         params: options,
       }),
+
+      serializeQueryArgs: ({ queryArgs }) => {
+        return queryArgs.chatId;
+      },
+
+      merge: (currentCache, newItems) => {
+        currentCache.data.unshift(...newItems.data);
+        currentCache.totalPages = newItems.totalPages;
+        currentCache.currentPage = newItems.currentPage;
+        currentCache.hasPrevPage = newItems.hasPrevPage;
+      },
+
       providesTags: (_result, _error, { chatId }) => [{ type: 'Message', id: `LIST-${chatId}` }],
+    }),
+
+    /**
+     * PUT /messages/:messageId
+     */
+    updateMessage: builder.mutation<IMessage, { messageId: string; dto: IMessageUpdateDTO }>({
+      query: ({ messageId, dto }) => ({
+        url: `messages/${messageId}`,
+        method: 'PUT',
+        body: dto,
+      }),
+
+      async onQueryStarted({ messageId }, { dispatch, queryFulfilled }) {
+        try {
+          const { data: updatedMessage } = await queryFulfilled;
+
+          dispatch(
+            messageApi.util.updateQueryData(
+              'getMessagesByChatId',
+              { chatId: updatedMessage.chatId, options: { page: 1, limit: 30 } },
+              (draft) => {
+                const msg = draft.data.find((m) => m._id === messageId);
+                if (msg) {
+                  msg.content = updatedMessage.content;
+                  msg.updatedAt = updatedMessage.updatedAt;
+                }
+              },
+            ),
+          );
+        } catch {
+          // patchResult.undo();
+        }
+      },
     }),
 
     // TODO: 'createMessage',
   }),
 });
 
-export const { useGetMessagesByChatIdQuery } = messageApi;
+export const { useGetMessagesByChatIdQuery, useUpdateMessageMutation } = messageApi;

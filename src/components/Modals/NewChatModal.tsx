@@ -20,12 +20,16 @@ export const NewChatModal: FC<NewChatModalProps> = ({ onClose }) => {
       setFormError('First name is required.');
       return;
     }
+    if (!lastName.trim()) {
+      setFormError('Last name is required.');
+      return;
+    }
     setFormError(null);
 
     try {
       await createChat({
         firstName,
-        lastName: lastName || undefined,
+        lastName,
       }).unwrap();
       onClose();
     } catch (err) {
