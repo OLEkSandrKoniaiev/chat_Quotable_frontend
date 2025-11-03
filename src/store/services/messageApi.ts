@@ -10,7 +10,7 @@ import type {
 export const messageApi = createApi({
   reducerPath: 'messageApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3000',
+    baseUrl: import.meta.env.VITE_BACKEND_URL,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem('accessToken');
       if (token) {
