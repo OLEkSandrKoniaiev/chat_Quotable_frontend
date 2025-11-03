@@ -42,7 +42,7 @@ class ChatService {
    */
   async uploadAvatar(chatId: string, file: File): Promise<IChat> {
     const formData = new FormData();
-    formData.append('avatar', file);
+    formData.append('avatarUrl', file);
 
     const { data } = await apiService.put<IChat>(`/chats/${chatId}`, formData, {
       headers: {

@@ -1,0 +1,49 @@
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 8px;
+  border-bottom: 1px solid #eee;
+  background-color: #fff;
+  height: 80px;
+  box-sizing: border-box;
+}
+
+.chatInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.chatName {
+  font-size: 20px;
+  font-weight: 500;
+  color: #1c1e21;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.actionButton {
+  background-color: #f0f2f5;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.actionButton:hover {
+  background-color: #e4e6e9;
+}
