@@ -11,31 +11,9 @@
 .chatWindowContainer {
   display: flex;
   flex-direction: column;
-
-  /* [!] Важливо: контейнер має займати 100% висоти
-     свого батька (тобто <main> з ChatLayout).
-     Переконайся, що ChatLayout.module.css це дозволяє. */
   height: 100%;
   background-color: #ffffff;
 }
-
-/* [!] ПРИМІТКА: Ми зробимо це на наступному кроці,
-  але компоненти всередині будуть стилізовані так:
-*/
-
-/* .chatHeader {
-  flex-shrink: 0; // Заголовок не стискається
-}
-
-.messageList {
-  flex-grow: 1; // Список повідомлень займає весь вільний простір
-  overflow-y: auto; // Додає прокрутку
-}
-
-.messageInput {
-  flex-shrink: 0; // Інпут не стискається
-}
-*/
 
 .statusMessage {
   display: flex;

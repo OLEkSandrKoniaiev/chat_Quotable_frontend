@@ -30,16 +30,21 @@ export const messageApi = createApi({
         url: `chats/${chatId}/messages`,
         params: options,
       }),
-
       serializeQueryArgs: ({ queryArgs }) => {
         return queryArgs.chatId;
       },
 
       merge: (currentCache, newItems) => {
-        currentCache.data.unshift(...newItems.data);
+        if (newItems.currentPage === 1) {
+          currentCache.data = newItems.data;
+        } else {
+          currentCache.data.unshift(...newItems.data);
+        }
+
         currentCache.totalPages = newItems.totalPages;
         currentCache.currentPage = newItems.currentPage;
         currentCache.hasPrevPage = newItems.hasPrevPage;
+        currentCache.totalDocs = newItems.totalDocs;
       },
 
       providesTags: (_result, _error, { chatId }) => [{ type: 'Message', id: `LIST-${chatId}` }],

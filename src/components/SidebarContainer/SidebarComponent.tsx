@@ -19,7 +19,7 @@ function SidebarComponent() {
     isLoading,
     error,
   } = useGetChatsQuery(debouncedSearchQuery, {
-    pollingInterval: 5000,
+    pollingInterval: 6000,
   });
 
   const prevChatsRef = useRef<IChat[]>([]);
