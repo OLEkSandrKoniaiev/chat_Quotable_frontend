@@ -30,14 +30,20 @@ apiService.interceptors.response.use(
     return response;
   },
   (error) => {
-    const { status } = error.response || {};
+    const { status, config } = error.response || {};
+    const originalRequestUrl = config?.url || '';
 
     if (status === 401) {
-      console.error('[ApiService] Intercepted 401. Token invalid. Performing logout...');
+      const isAuthPath =
+        originalRequestUrl.endsWith('/users/login') ||
+        originalRequestUrl.endsWith('/users/register');
 
-      localStorage.removeItem('accessToken');
+      if (!isAuthPath) {
+        console.error('[ApiService] Intercepted 401. Token invalid. Logging out...');
+        localStorage.removeItem('accessToken');
 
-      window.location.href = '/login';
+        window.location.href = '/login';
+      }
     }
 
     return Promise.reject(error);
