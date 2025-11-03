@@ -68,7 +68,7 @@ export const NewChatModal: FC<NewChatModalProps> = ({ onClose }) => {
           </div>
 
           <div className={styles.inputGroup}>
-            <label htmlFor="lastName">Last Name (optional)</label>
+            <label htmlFor="lastName">Last Name *</label>
             <input
               id="lastName"
               type="text"
