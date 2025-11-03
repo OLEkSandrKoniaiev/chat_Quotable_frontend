@@ -49,18 +49,13 @@ const MessageListComponent: FC<MessageListProps> = ({
       {isLoading && hasNextPage && <div className={styles.loader}>Loading older messages...</div>}
 
       {messages.map((message) => (
-        <div
+        <MessageListItemComponent
           key={message._id}
-          className={`${styles.messageWrapper} ${
-            message.sender === 'user' ? styles.user : styles.bot
-          }`}
-        >
-          <MessageListItemComponent
-            message={message}
-            chatAvatarUrl={chat?.avatarUrl}
-            chatFirstName={chat?.firstName}
-          />
-        </div>
+          message={message}
+          sender={message.sender}
+          chatAvatarUrl={chat?.avatarUrl}
+          chatFirstName={chat?.firstName}
+        />
       ))}
     </div>
   );

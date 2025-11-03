@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type {
   IMessage,
+  IMessageCreateDTO,
   IMessageUpdateDTO,
   IPaginatedResult,
   IPaginationOptions,
@@ -18,7 +19,7 @@ export const messageApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Message'],
+  tagTypes: ['Message', 'Chat'],
 
   endpoints: (builder) => ({
     getMessagesByChatId: builder.query<
@@ -77,8 +78,23 @@ export const messageApi = createApi({
       },
     }),
 
-    // TODO: 'createMessage',
+    /**
+     * POST /chats/:chatId/messages
+     */
+    createMessage: builder.mutation<IMessage, { chatId: string; dto: IMessageCreateDTO }>({
+      query: ({ chatId, dto }) => ({
+        url: `chats/${chatId}/messages`,
+        method: 'POST',
+        body: dto,
+      }),
+
+      invalidatesTags: (_result, _error, { chatId }) => [
+        { type: 'Message', id: `LIST-${chatId}` },
+        { type: 'Chat', id: 'LIST' },
+      ],
+    }),
   }),
 });
 
-export const { useGetMessagesByChatIdQuery, useUpdateMessageMutation } = messageApi;
+export const { useGetMessagesByChatIdQuery, useUpdateMessageMutation, useCreateMessageMutation } =
+  messageApi;

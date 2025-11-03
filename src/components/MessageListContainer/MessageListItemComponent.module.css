@@ -68,3 +68,28 @@
   padding: 4px;
   color: inherit;
 }
+
+
+.messageItemRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.botRow {
+  justify-content: flex-start;
+}
+
+.userRow {
+  justify-content: flex-end;
+}
+
+.bubble {
+  padding: 10px 14px;
+  border-radius: 18px;
+  max-width: 70%;
+
+  overflow-wrap: break-word;
+  word-break: break-all;
+}

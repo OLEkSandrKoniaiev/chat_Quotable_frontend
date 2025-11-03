@@ -100,6 +100,34 @@ export const chatApi = createApi({
         { type: 'Chat', id: chatId },
       ],
     }),
+
+    /**
+     * PATCH /chats/:chatId/read
+     */
+    markChatAsRead: builder.mutation<void, string>({
+      query: (chatId) => ({
+        url: `chats/${chatId}/read`,
+        method: 'PATCH',
+      }),
+
+      async onQueryStarted(chatId, { dispatch, queryFulfilled }) {
+        const listPatchResult = dispatch(
+          chatApi.util.updateQueryData('getChats', '', (draft) => {
+            const chat = draft.find((c) => c._id === chatId);
+            if (chat) {
+              chat.unreadCount = 0;
+            }
+          }),
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          listPatchResult.undo();
+        }
+      },
+
+      invalidatesTags: [{ type: 'Chat', id: 'LIST' }],
+    }),
   }),
 });
 
@@ -110,4 +138,5 @@ export const {
   useUpdateChatMutation,
   useUploadChatAvatarMutation,
   useGetChatByIdQuery,
+  useMarkChatAsReadMutation,
 } = chatApi;

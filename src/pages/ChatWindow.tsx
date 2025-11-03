@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useGetChatByIdQuery } from '../store/services/chatApi.ts';
+import { useGetChatByIdQuery, useMarkChatAsReadMutation } from '../store/services/chatApi.ts';
 import { useGetMessagesByChatIdQuery } from '../store/services/messageApi.ts';
 import ChatHeaderComponent from '../components/ChatHeaderContainer/ChatHeaderComponent.tsx';
 import MessageListComponent from '../components/MessageListContainer/MessageListComponent.tsx';
@@ -30,6 +30,14 @@ function ChatWindow() {
       refetchOnMountOrArgChange: true,
     },
   );
+
+  const [markAsRead] = useMarkChatAsReadMutation();
+
+  useEffect(() => {
+    if (chatId) {
+      markAsRead(chatId);
+    }
+  }, [chatId, messagesData, markAsRead]);
 
   const loadMoreMessages = () => {
     if (messagesData?.hasPrevPage && !messagesLoading) {

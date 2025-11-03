@@ -8,12 +8,14 @@ import styles from './MessageListItemComponent.module.css';
 
 interface MessageListItemProps {
   message: IMessage;
+  sender: 'user' | 'bot';
   chatAvatarUrl?: string;
   chatFirstName?: string;
 }
 
 const MessageListItemComponent: FC<MessageListItemProps> = ({
   message,
+  sender,
   chatAvatarUrl,
   chatFirstName,
 }) => {
@@ -52,8 +54,10 @@ const MessageListItemComponent: FC<MessageListItemProps> = ({
   const isModified = message.updatedAt !== message.createdAt;
 
   return (
-    <div className={styles.messageItemRow}>
-      {message.sender === 'bot' && (
+    <div
+      className={`${styles.messageItemRow} ${sender === 'user' ? styles.userRow : styles.botRow}`}
+    >
+      {sender === 'bot' && (
         <div className={styles.avatarContainer}>
           <AvatarComponent
             firstName={chatFirstName || 'Bot'}
@@ -64,9 +68,7 @@ const MessageListItemComponent: FC<MessageListItemProps> = ({
       )}
 
       <div
-        className={`${styles.bubble} ${
-          message.sender === 'user' ? styles.userBubble : styles.botBubble
-        }`}
+        className={`${styles.bubble} ${sender === 'user' ? styles.userBubble : styles.botBubble}`}
       >
         {isEditing ? (
           <input
